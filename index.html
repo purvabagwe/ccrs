@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Complaint Report System</title>
+    <!-- Use Tailwind CSS for a modern and responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-md rounded-b-xl">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <!-- Title -->
+            <div class="flex items-center space-x-3">
+                <span class="text-3xl">🎓</span>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
+                    College Complaint Report System
+                </h1>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="flex items-center space-x-4">
+                <a href="index.html" class="text-gray-600 font-medium hover:text-blue-500 transition-colors">Home</a>
+                <a href="lodge.html" class="text-gray-600 font-medium hover:text-blue-500 transition-colors">Lodge
+                    Complaint</a>
+                <a href="view.html" class="text-gray-600 font-medium hover:text-blue-500 transition-colors">View
+                    Status</a>
+                <a href="admin.html"
+                    class="text-gray-600 font-medium hover:text-blue-500 transition-colors whitespace-nowrap">Admin
+                    Login</a>
+            </nav>
+
+            <!-- Auth Buttons / User State -->
+            <div id="auth-buttons" class="hidden md:flex items-center space-x-4">
+                <a href="signin.html" class="text-gray-600 font-medium hover:text-blue-500 transition-colors">Sign In</a>
+                <a href="signup.html"
+                    class="bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition-colors whitespace-nowrap">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 mt-12">
+        <!-- Hero Section -->
+        <section class="text-center py-16">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">Your Voice, Our Priority</h2>
+            <p class="text-lg text-gray-600 mb-8">
+                Anonymously report complaints and track their status with ease.
+            </p>
+            <a href="lodge.html"
+                class="inline-block bg-blue-600 text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider shadow-lg hover:bg-blue-700 transition-transform transform hover:-translate-y-1">
+                Lodge a Complaint
+            </a>
+        </section>
+
+        <!-- Complaint Categories Section -->
+        <section class="mt-12">
+            <h3 class="text-3xl font-bold text-gray-800 text-center mb-8">Common Complaint Categories</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                    <span class="text-3xl">👨‍🏫</span>
+                    <p class="font-medium text-gray-700">Academic Issues</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                    <span class="text-3xl">📝</span>
+                    <p class="font-medium text-gray-700">Exam & Result Queries</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                    <span class="text-3xl">🏫</span>
+                    <p class="font-medium text-gray-700">Campus Facilities</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                    <span class="text-3xl">🚫</span>
+                    <p class="font-medium text-gray-700">Ragging / Harassment</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                    <span class="text-3xl">✉️</span>
+                    <p class="font-medium text-gray-700">Other Complaints</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+
+    <footer class="bg-gray-800 rounded-t-xl text-white py-6 mt-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400">&copy; 2025 College Complaint Report System</p>
+            <div class="flex justify-center space-x-4 mt-2 text-sm">
+                <a href="#" class="text-gray-400 hover:text-blue-400">Terms of Service</a>
+                <span class="text-gray-600">|</span>
+                <a href="#" class="text-gray-400 hover:text-blue-400">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const authContainer = document.getElementById('auth-buttons');
+            const currentUser = localStorage.getItem('currentUser');
+
+            if (currentUser) {
+                try {
+                    const user = JSON.parse(currentUser);
+                    const displayName = user.firstName ? `${user.firstName}` : user.email.split('@')[0];
+                    authContainer.innerHTML = `
+                        <span class="text-sm font-medium text-gray-700">👋 Hi, <strong class="text-blue-600">${displayName}</strong></span>
+                        <button onclick="handleLogout()" class="text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1.5 rounded-md font-medium transition-colors">Logout</button>
+                    `;
+                } catch (e) {}
+            }
+        });
+
+        function handleLogout() {
+            localStorage.removeItem('currentUser');
+            window.location.reload();
+        }
+    </script>
+</body>
+
+</html>

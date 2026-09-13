@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Complaint Status - College Complaint Report System</title>
+    <!-- Use Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #c1d5e0);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: #4b5563;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #3b82f6;
+        }
+
+        .main-content {
+            padding: 0 1.5rem;
+        }
+
+        .container {
+            max-width: 48rem;
+            /* max-w-2xl */
+            margin: 0 auto;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .card h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            background-color: #f9fafb;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+
+        .submit-button {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            width: 100%;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #1e40af;
+        }
+
+        .status-card {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2.5rem;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .status-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .status-icon {
+            font-size: 2.25rem;
+        }
+
+        .status-info {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: #4b5563;
+            width: 10rem;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .status-message-container {
+            display: none;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-message.error {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+
+        .status-message.success {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <h1><span>🔍</span>View Complaint Status</h1>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="lodge.html" class="nav-link">Lodge Complaint</a>
+            <a href="admin.html" class="nav-link">Admin Login</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="card">
+                <h2>Check Complaint Status</h2>
+                <p>Enter the Complaint ID you received to view its current status.</p>
+                <form id="statusForm" onsubmit="checkStatus(event)">
+                    <div class="form-group">
+                        <label for="complaintId">Complaint ID</label>
+                        <input type="text" id="complaintId" name="complaintId" placeholder="e.g., COMP-12345" required>
+                    </div>
+                    <button type="submit" class="submit-button">Check Status</button>
+                </form>
+            </div>
+
+            <div id="statusMessageContainer" class="status-message-container">
+                <p id="statusMessage" class="status-message"></p>
+            </div>
+
+            <div id="statusCard" class="status-card">
+                <div class="status-header">
+                    <h3 class="status-title">Complaint Details</h3>
+                    <span id="statusIcon" class="status-icon"></span>
+                </div>
+                <div class="status-info">
+                    <div class="info-row">
+                        <span class="info-label">ID:</span>
+                        <span id="complaintIdDisplay" class="info-value"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Title:</span>
+                        <span id="complaintTitle" class="info-value"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Category:</span>
+                        <span id="complaintCategory" class="info-value"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Status:</span>
+                        <span id="complaintStatus" class="info-value"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Date Lodged:</span>
+                        <span id="complaintDate" class="info-value"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Description:</span>
+                        <span id="complaintDescription" class="info-value"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // JavaScript to handle status check
+        async function checkStatus(event) {
+            if (event) event.preventDefault();
+
+            const inputEl = document.getElementById('complaintId');
+            const complaintId = inputEl.value ? inputEl.value.trim() : '';
+            if (!complaintId) return;
+
+            const statusMessageContainer = document.getElementById('statusMessageContainer');
+            const statusMessage = document.getElementById('statusMessage');
+            const statusCard = document.getElementById('statusCard');
+
+            // Hide previous results
+            statusMessageContainer.style.display = 'none';
+            statusCard.style.display = 'none';
+
+            try {
+                // Fetch complaint data from the backend
+                const response = await fetch(`/api/complaints/${encodeURIComponent(complaintId)}`);
+
+                if (response.ok) {
+                    const complaint = await response.json();
+                    document.getElementById('statusIcon').textContent = getStatusIcon(complaint.status);
+                    document.getElementById('complaintIdDisplay').textContent = complaint.complaintId;
+                    document.getElementById('complaintTitle').textContent = complaint.title;
+                    document.getElementById('complaintCategory').textContent = complaint.category;
+                    document.getElementById('complaintStatus').textContent = complaint.status;
+                    document.getElementById('complaintDate').textContent = new Date(complaint.createdAt).toLocaleDateString();
+                    document.getElementById('complaintDescription').textContent = complaint.description;
+
+                    statusMessageContainer.style.display = 'none';
+                    statusCard.style.display = 'flex';
+                } else {
+                    statusMessage.textContent = 'Complaint ID not found. Please check your ID and try again.';
+                    statusMessage.className = 'status-message error';
+                    statusMessageContainer.style.display = 'block';
+                }
+            } catch (error) {
+                statusMessage.textContent = 'An error occurred. Please try again later.';
+                statusMessage.className = 'status-message error';
+                statusMessageContainer.style.display = 'block';
+                console.error('Fetch error:', error);
+            }
+        }
+
+        // Helper function to get emoji based on status
+        function getStatusIcon(status) {
+            switch (status) {
+                case 'Pending':
+                    return '📝';
+                case 'In Progress':
+                    return '⚙️';
+                case 'Resolved':
+                    return '✅';
+                default:
+                    return '🔍';
+            }
+        }
+
+        // Check if ID is in URL query parameters (e.g. view.html?id=COMP-78123)
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (id) {
+                document.getElementById('complaintId').value = id;
+                checkStatus();
+            }
+        });
+    </script>
+</body>
+
+</html>

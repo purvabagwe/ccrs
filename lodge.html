@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lodge a Complaint - College Complaint Report System</title>
+    <!-- Use Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e3f2fd, #90caf9);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: #4b5563;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #3b82f6;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            padding: 0 2rem;
+            margin-top: 2rem;
+        }
+
+        .container {
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.6rem 0.9rem;
+            /* Reduced padding */
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            background-color: #f9fafb;
+            font-size: 1rem;
+            line-height: 1.5;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+        }
+
+        .form-group textarea {
+            min-height: 10rem;
+        }
+
+        /* Submit Button */
+        .submit-button {
+            text-decoration: none;
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            width: 100%;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #1e40af;
+            transform: scale(1.05);
+        }
+
+        /* Confirmation Message */
+        .confirmation-message {
+            display: none;
+            text-align: center;
+        }
+
+        .confirmation-message h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .complaint-id-box {
+            background-color: #e0f2fe;
+            border: 1px solid #bfdbfe;
+            color: #1d4ed8;
+            padding: 1rem 1.25rem;
+            border-radius: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1.5rem auto 1rem auto;
+            max-width: 320px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+        }
+
+
+        #complaintId {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+
+        .copy-button {
+            background-color: #bfdbfe;
+            color: #1d4ed8;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.85rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+
+        .copy-button:hover {
+            background-color: #93c5fd;
+        }
+
+        /* Message Box */
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        .message-box-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .submit-button {
+                padding: 1rem;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <h1><span>📝</span>Lodge a Complaint</h1>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="view.html" class="nav-link">View Status</a>
+            <a href="admin.html" class="nav-link">Admin Login</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="card">
+                <div id="complaintFormContainer">
+                    <h2>Lodge Your Complaint</h2>
+                    <p>Fill out the form below to report an issue. Your complaint will be anonymous.</p>
+                    <form id="complaintForm" onsubmit="handleFormSubmission(event)">
+                        <div class="form-group">
+                            <label for="title">Complaint Title</label>
+                            <input type="text" id="title" name="title" placeholder="e.g., Unsanitary Canteen" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category" required>
+                                <option value="">Select a category</option>
+                                <option value="Academic">Academic</option>
+                                <option value="Facilities">Campus Facilities</option>
+                                <option value="Harassment">Ragging / Harassment</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description"
+                                placeholder="Provide details about the complaint..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">Submit Complaint</button>
+                    </form>
+                </div>
+
+                <div class="confirmation-message" id="confirmationMessage">
+                    <h3>Complaint Submitted Successfully!</h3>
+                    <p>Your complaint has been submitted. Please save your unique Complaint ID to track its status.</p>
+
+                    <!-- Blue Box with Complaint ID -->
+                    <div class="complaint-id-box">
+                        <p>Your Complaint ID:</p>
+                        <p><strong id="complaintId"></strong></p>
+                        <button onclick="copyComplaintId()" class="copy-button">Copy ID</button>
+                    </div>
+
+                    <!-- View Status Button (moved outside box) -->
+                    <div style="text-align: center; margin-top: 1.5rem;">
+                        <a href="view.html" class="submit-button">View Status</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Custom message box for copy confirmation -->
+    <div id="messageBoxOverlay" class="message-box-overlay"></div>
+    <div id="messageBox" class="message-box">
+        <p id="messageText"></p>
+        <button onclick="closeMessageBox()" style="margin-top: 1rem;">OK</button>
+    </div>
+
+    <script>
+        // JavaScript to handle form submission
+        const form = document.getElementById('complaintForm');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        const complaintIdSpan = document.getElementById('complaintId');
+
+        // Custom message box functions
+        const messageBox = document.getElementById('messageBox');
+        const messageBoxOverlay = document.getElementById('messageBoxOverlay');
+        const messageText = document.getElementById('messageText');
+
+        function showMessageBox(message) {
+            messageText.textContent = message;
+            messageBox.style.display = 'block';
+            messageBoxOverlay.style.display = 'block';
+        }
+
+        function closeMessageBox() {
+            messageBox.style.display = 'none';
+            messageBoxOverlay.style.display = 'none';
+        }
+
+        async function handleFormSubmission(event) {
+            event.preventDefault();
+
+            const title = form.title.value;
+            const category = form.category.value;
+            const description = form.description.value;
+
+            try {
+                const response = await fetch('/api/complaints', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, category, description })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    complaintIdSpan.textContent = data.complaintId;
+
+                    // Hide the form and show the confirmation message
+                    document.getElementById('complaintFormContainer').style.display = 'none';
+                    confirmationMessage.style.display = 'block';
+                } else {
+                    const errorData = await response.json();
+                    showMessageBox(errorData.error || 'Failed to submit complaint. Please check the fields.');
+                }
+            } catch (error) {
+                console.error('Network error:', error);
+                showMessageBox('Unable to connect to the server. Please ensure the server is running.');
+            }
+        }
+
+        function copyComplaintId() {
+            const complaintIdSpan = document.getElementById('complaintId');
+            const textToCopy = complaintIdSpan.textContent;
+
+            if (document.execCommand) {
+                const tempInput = document.createElement('textarea');
+                tempInput.value = textToCopy;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                showMessageBox('Complaint ID copied to clipboard!');
+            } else {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showMessageBox('Complaint ID copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    showMessageBox('Failed to copy text. Please copy manually.');
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

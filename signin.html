@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - College Complaint Report System</title>
+    <!-- Use Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --primary-blue-dark: #1d4ed8;
+            --gradient-start: #1d4ed8;
+            --gradient-end: #2563eb;
+            --bg-light: #f0f4f8;
+            --bg-dark: #c1d5e0;
+            --card-bg-blur: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-light), var(--bg-dark));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 1rem;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .auth-card {
+            background-color: var(--card-bg-blur);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid var(--card-border);
+        }
+
+        .auth-header {
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header p {
+            font-size: 1rem;
+            color: #4b5563;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.75rem;
+            background-color: #f9fafb;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            color: #ffffff;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .other-link {
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: #4b5563;
+        }
+
+        .other-link a {
+            color: var(--primary-blue);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .other-link a:hover {
+            text-decoration: underline;
+        }
+
+        .message-container {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+        }
+
+        .message.success {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+
+        .message.error {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Sign In</h2>
+            <p>Welcome back! Please sign in to your account.</p>
+        </div>
+        <form id="signInForm" onsubmit="handleSignIn(event)">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" placeholder="" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="" required>
+            </div>
+            <button type="submit" class="submit-button">Sign In</button>
+        </form>
+        <div id="messageContainer" class="message-container" style="display:none;">
+            <p id="message"></p>
+        </div>
+        <div class="other-link">
+            Don't have an account? <a href="signup.html">Sign Up here</a>
+        </div>
+        <div style="margin-top: 1rem; font-size: 0.875rem;">
+            <a href="index.html" style="color: var(--primary-blue); text-decoration: none; font-weight: 500;">← Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        async function handleSignIn(event) {
+            event.preventDefault();
+
+            const form = document.getElementById('signInForm');
+            const messageContainer = document.getElementById('messageContainer');
+            const message = document.getElementById('message');
+
+            const email = form.email.value;
+            const password = form.password.value;
+
+            try {
+                const response = await fetch('/api/users/signin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    message.textContent = data.message || 'Sign in successful!';
+                    message.className = 'message success';
+                    messageContainer.style.display = 'block';
+
+                    // Save current user session
+                    if (data.user) {
+                        localStorage.setItem('currentUser', JSON.stringify(data.user));
+                    }
+
+                    // Redirect after short delay
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                } else {
+                    message.textContent = data.error || 'Invalid email or password';
+                    message.className = 'message error';
+                    messageContainer.style.display = 'block';
+                }
+            } catch (error) {
+                message.textContent = 'An error occurred. Please try again later.';
+                message.className = 'message error';
+                messageContainer.style.display = 'block';
+                console.error('Sign-in error:', error);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

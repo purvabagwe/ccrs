@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - College Complaint Report System</title>
+    <!-- Use Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --primary-blue-dark: #1d4ed8;
+            --gradient-start: #1d4ed8;
+            --gradient-end: #2563eb;
+            --bg-light: #f0f4f8;
+            --bg-dark: #c1d5e0;
+            --card-bg-blur: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-light), var(--bg-dark));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #34495e;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            padding: 2.5rem;
+            background: var(--card-bg-blur);
+            backdrop-filter: blur(15px);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-blue-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #5d6d7e;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 1px solid #dcdfe6;
+            border-radius: 0.75rem;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .button-primary {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .link-text {
+            display: block;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: #7f8c8d;
+        }
+
+        .link-text a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .link-text a:hover {
+            text-decoration: underline;
+        }
+
+        .message-container {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">👤</div>
+        <h1>Sign Up</h1>
+        <p>Create your new account to lodge a complaint</p>
+
+        <form id="signUpForm">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="button-primary">Sign Up</button>
+        </form>
+
+        <div id="messageContainer" class="message-container">
+            <span id="message" class="message"></span>
+        </div>
+
+        <p class="link-text">
+            Already have an account? <a href="signin.html">Sign In</a>
+        </p>
+        <p class="link-text" style="margin-top: 0.5rem;">
+            <a href="index.html">← Back to Home</a>
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('signUpForm').addEventListener('submit', handleFormSubmission);
+
+        async function handleFormSubmission(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const firstName = form.firstName.value;
+            const lastName = form.lastName.value;
+            const email = form.email.value;
+            const password = form.password.value;
+
+            const messageContainer = document.getElementById('messageContainer');
+            const message = document.getElementById('message');
+
+            try {
+                const response = await fetch('/api/users/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ firstName, lastName, email, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    message.textContent = data.message || 'Sign up successful! Redirecting to Sign In...';
+                    message.className = 'message success';
+                    messageContainer.style.display = 'block';
+                    document.getElementById('signUpForm').reset();
+                    setTimeout(() => {
+                        window.location.href = 'signin.html';
+                    }, 1500);
+                } else {
+                    const errorData = await response.json();
+                    message.textContent = errorData.error || 'Failed to create account. Please try again.';
+                    message.className = 'message error';
+                    messageContainer.style.display = 'block';
+                }
+            } catch (error) {
+                // Handle network errors or other unexpected issues
+                message.textContent = 'An error occurred. Please check if the server is running and try again.';
+                message.className = 'message error';
+                messageContainer.style.display = 'block';
+                console.error('Sign-up error:', error);
+            }
+        }
+    </script>
+</body>
+
+</html>

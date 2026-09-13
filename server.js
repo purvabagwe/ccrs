@@ -135,217 +135,228 @@ app.post("/api/users/signup", async (req, res) => {
 
     await newUser.save();
 
-    // --- Sign In (User) ---
-    app.post("/api/users/signin", async (req, res) => {
-      try {
-        const { email, password } = req.body;
+    return res.status(201).json({
+      message: "User registered successfully! You can now sign in."
+    });
+  } catch (err) {
+    console.error("Signup error:", err);
+    return res.status(500).json({
+      error: "Server error during registration. Please try again."
+    });
+  }
+});
 
-        if (!email || !password) {
-          return res.status(400).json({ error: "Email and password are required" });
-        }
+// --- Sign In (User) ---
+app.post("/api/users/signin", async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-        const normalizedEmail = email.trim().toLowerCase();
-        let user;
+    if (!email || !password) {
+      return res.status(400).json({ error: "Email and password are required" });
+    }
 
-        user = await User.findOne({
-          email: normalizedEmail,
-          role: "user"
-        });
+    const normalizedEmail = email.trim().toLowerCase();
+    let user;
 
-        if (!user) {
-          return res.status(400).json({ error: "Invalid email or password" });
-        }
+    user = await User.findOne({
+      email: normalizedEmail,
+      role: "user"
+    });
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-          return res.status(400).json({ error: "Invalid email or password" });
-        }
+    if (!user) {
+      return res.status(400).json({ error: "Invalid email or password" });
+    }
 
-        res.json({
-          message: "User login successful",
-          user: {
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            role: user.role
-          }
-        });
-      } catch (err) {
-        console.error("Signin error:", err);
-        res.status(500).json({ error: "Server error. Please try again later." });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid email or password" });
+    }
+
+    res.json({
+      message: "User login successful",
+      user: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role
       }
     });
+  } catch (err) {
+    console.error("Signin error:", err);
+    res.status(500).json({ error: "Server error. Please try again later." });
+  }
+});
 
-    // --- Sign In (Admin) ---
-    app.post("/api/admin/signin", async (req, res) => {
-      try {
-        const { email, password } = req.body;
+// --- Sign In (Admin) ---
+app.post("/api/admin/signin", async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-        if (!email || !password) {
-          return res.status(400).json({ error: "Email and password are required" });
-        }
+    if (!email || !password) {
+      return res.status(400).json({ error: "Email and password are required" });
+    }
 
-        const normalizedEmail = email.trim().toLowerCase();
-        let admin;
+    const normalizedEmail = email.trim().toLowerCase();
+    let admin;
 
-        admin = await User.findOne({
-          email: normalizedEmail,
-          role: "admin"
-        });
+    admin = await User.findOne({
+      email: normalizedEmail,
+      role: "admin"
+    });
 
-        if (!admin) {
-          return res.status(400).json({ error: "Invalid admin credentials" });
-        }
+    if (!admin) {
+      return res.status(400).json({ error: "Invalid admin credentials" });
+    }
 
-        const isMatch = await bcrypt.compare(password, admin.password);
-        if (!isMatch) {
-          return res.status(400).json({ error: "Invalid admin credentials" });
-        }
+    const isMatch = await bcrypt.compare(password, admin.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid admin credentials" });
+    }
 
-        res.json({
-          message: "Admin login successful",
-          admin: {
-            email: admin.email,
-            role: "admin"
-          }
-        });
-      } catch (err) {
-        console.error("Admin signin error:", err);
-        res.status(500).json({ error: "Server error. Please try again later." });
+    res.json({
+      message: "Admin login successful",
+      admin: {
+        email: admin.email,
+        role: "admin"
       }
     });
+  } catch (err) {
+    console.error("Admin signin error:", err);
+    res.status(500).json({ error: "Server error. Please try again later." });
+  }
+});
 
-    // ==========================================
-    // Complaints Routes
-    // ==========================================
+// ==========================================
+// Complaints Routes
+// ==========================================
 
-    // --- Lodge a Complaint ---
-    app.post("/api/complaints", async (req, res) => {
-      try {
-        const { title, category, description } = req.body;
+// --- Lodge a Complaint ---
+app.post("/api/complaints", async (req, res) => {
+  try {
+    const { title, category, description } = req.body;
 
-        if (!title || !category || !description) {
-          return res.status(400).json({ error: "Title, category, and description are required" });
-        }
+    if (!title || !category || !description) {
+      return res.status(400).json({ error: "Title, category, and description are required" });
+    }
 
-        const complaintId = "COMP-" + Math.floor(100000 + Math.random() * 900000);
+    const complaintId = "COMP-" + Math.floor(100000 + Math.random() * 900000);
 
-        const newComplaint = new Complaint({
-          complaintId,
-          title: title.trim(),
-          category: category.trim(),
-          description: description.trim()
-        });
-
-        const savedComplaint = await newComplaint.save();
-
-        res.status(201).json({
-          message: "Complaint submitted successfully",
-          complaintId: savedComplaint.complaintId
-        });
-      } catch (error) {
-        console.error("Complaint submission error:", error);
-        res.status(500).json({ error: "Server error while submitting complaint" });
-      }
+    const newComplaint = new Complaint({
+      complaintId,
+      title: title.trim(),
+      category: category.trim(),
+      description: description.trim()
     });
 
-    // --- View Complaint Status by ID ---
-    app.get("/api/complaints/:complaintId", async (req, res) => {
-      try {
-        const { complaintId } = req.params;
-        let complaint;
+    const savedComplaint = await newComplaint.save();
 
-        complaint = await Complaint.findOne({
-          complaintId: new RegExp("^" + complaintId.trim() + "$", "i")
-        });
+    res.status(201).json({
+      message: "Complaint submitted successfully",
+      complaintId: savedComplaint.complaintId
+    });
+  } catch (error) {
+    console.error("Complaint submission error:", error);
+    res.status(500).json({ error: "Server error while submitting complaint" });
+  }
+});
 
-        if (!complaint) {
-          return res.status(404).json({ error: "Complaint not found" });
-        }
+// --- View Complaint Status by ID ---
+app.get("/api/complaints/:complaintId", async (req, res) => {
+  try {
+    const { complaintId } = req.params;
+    let complaint;
 
-        res.json({
-          complaintId: complaint.complaintId,
-          title: complaint.title,
-          category: complaint.category,
-          description: complaint.description,
-          status: complaint.status,
-          createdAt: complaint.createdAt
-        });
-      } catch (error) {
-        console.error("Error fetching complaint:", error);
-        res.status(500).json({ error: "Server error. Please try again later." });
-      }
+    complaint = await Complaint.findOne({
+      complaintId: new RegExp("^" + complaintId.trim() + "$", "i")
     });
 
-    // --- List All Complaints (for Admin) ---
-    app.get("/api/complaints", async (req, res) => {
-      try {
-        let complaints;
-        complaints = await Complaint.find().sort({ createdAt: -1 });
+    if (!complaint) {
+      return res.status(404).json({ error: "Complaint not found" });
+    }
 
-        res.json(complaints);
-      } catch (err) {
-        console.error("Error listing complaints:", err);
-        res.status(500).json({ error: "Server error loading complaints" });
-      }
+    res.json({
+      complaintId: complaint.complaintId,
+      title: complaint.title,
+      category: complaint.category,
+      description: complaint.description,
+      status: complaint.status,
+      createdAt: complaint.createdAt
+    });
+  } catch (error) {
+    console.error("Error fetching complaint:", error);
+    res.status(500).json({ error: "Server error. Please try again later." });
+  }
+});
+
+// --- List All Complaints (for Admin) ---
+app.get("/api/complaints", async (req, res) => {
+  try {
+    let complaints;
+    complaints = await Complaint.find().sort({ createdAt: -1 });
+
+    res.json(complaints);
+  } catch (err) {
+    console.error("Error listing complaints:", err);
+    res.status(500).json({ error: "Server error loading complaints" });
+  }
+});
+
+// --- Update Complaint Status ---
+app.patch("/api/complaints/:complaintId/status", async (req, res) => {
+  try {
+    const { complaintId } = req.params;
+    const { status } = req.body;
+
+    const validStatuses = ["Pending", "In Progress", "Resolved"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ error: "Invalid status value" });
+    }
+
+    let updated;
+    updated = await Complaint.findOneAndUpdate(
+      { complaintId: new RegExp("^" + complaintId.trim() + "$", "i") },
+      { status },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ error: "Complaint not found" });
+    }
+
+    res.json({
+      message: "Status updated successfully",
+      complaint: updated
+    });
+  } catch (err) {
+    console.error("Error updating complaint status:", err);
+    res.status(500).json({ error: "Server error updating status" });
+  }
+});
+
+// --- Delete Complaint (Admin) ---
+app.delete("/api/complaints/:complaintId", async (req, res) => {
+  try {
+    const { complaintId } = req.params;
+    let deleted = false;
+
+    const result = await Complaint.findOneAndDelete({
+      complaintId: new RegExp("^" + complaintId.trim() + "$", "i")
     });
 
-    // --- Update Complaint Status ---
-    app.patch("/api/complaints/:complaintId/status", async (req, res) => {
-      try {
-        const { complaintId } = req.params;
-        const { status } = req.body;
+    deleted = !!result;
 
-        const validStatuses = ["Pending", "In Progress", "Resolved"];
-        if (!validStatuses.includes(status)) {
-          return res.status(400).json({ error: "Invalid status value" });
-        }
+    if (!deleted) {
+      return res.status(404).json({ error: "Complaint not found" });
+    }
 
-        let updated;
-        updated = await Complaint.findOneAndUpdate(
-          { complaintId: new RegExp("^" + complaintId.trim() + "$", "i") },
-          { status },
-          { new: true }
-        );
+    res.json({ message: "Complaint deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting complaint:", err);
+    res.status(500).json({ error: "Server error deleting complaint" });
+  }
+});
 
-        if (!updated) {
-          return res.status(404).json({ error: "Complaint not found" });
-        }
-
-        res.json({
-          message: "Status updated successfully",
-          complaint: updated
-        });
-      } catch (err) {
-        console.error("Error updating complaint status:", err);
-        res.status(500).json({ error: "Server error updating status" });
-      }
-    });
-
-    // --- Delete Complaint (Admin) ---
-    app.delete("/api/complaints/:complaintId", async (req, res) => {
-      try {
-        const { complaintId } = req.params;
-        let deleted = false;
-
-        const result = await Complaint.findOneAndDelete({
-          complaintId: new RegExp("^" + complaintId.trim() + "$", "i")
-        });
-
-        deleted = !!result;
-
-        if (!deleted) {
-          return res.status(404).json({ error: "Complaint not found" });
-        }
-
-        res.json({ message: "Complaint deleted successfully" });
-      } catch (err) {
-        console.error("Error deleting complaint:", err);
-        res.status(500).json({ error: "Server error deleting complaint" });
-      }
-    });
-
-    // --- Start Server ---
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running at http://localhost:${PORT}`);
-    });
+// --- Start Server ---
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
+});

@@ -3,172 +3,140 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - College Complaint Report System</title>
-
-    <!-- Use Inter font from Google Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Admin Portal - College Complaint Report System</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #ffffff;
-            --secondary-color: #f8f9fa;
-            --accent-color: #4a89f3;
-            --text-color: #34495e;
-            --input-bg: #f0f2f5;
-            --border-color: #e0e6ed;
-            --success-color: #28a745;
-            --error-color: #dc3545;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #e0eaf4, #f0f4f8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            padding: 1rem;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
-
-        .login-card {
-            background-color: var(--primary-color);
-            padding: 2.5rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .login-header {
-            margin-bottom: 2rem;
-        }
-
-        .login-header h2 {
-            font-size: 2.25rem;
-            font-weight: 700;
-            color: var(--text-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .login-header p {
-            font-size: 1rem;
-            color: #888;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            color: var(--text-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border-color);
-            border-radius: 0.75rem;
-            background-color: var(--input-bg);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(74, 137, 243, 0.2);
-        }
-
-        .submit-button {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            border: none;
-            border-radius: 0.75rem;
-            font-size: 1.125rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .submit-button:hover {
-            background-color: #3871d8;
-            transform: translateY(-2px);
-        }
-
-        .message-container {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            border-radius: 0.75rem;
-            font-weight: 500;
-            text-align: center;
-            display: none;
-            /* Hidden by default */
-        }
-
-        .message-container.hidden {
-            display: none;
-        }
-
-        .message.success {
-            background-color: rgba(40, 167, 69, 0.1);
-            color: var(--success-color);
-            border: 1px solid rgba(40, 167, 69, 0.2);
-        }
-
-        .message.error {
-            background-color: rgba(220, 53, 69, 0.1);
-            color: var(--error-color);
-            border: 1px solid rgba(220, 53, 69, 0.2);
+        input {
+            font-size: 16px !important;
         }
     </style>
 </head>
 
-<body>
-    <div class="login-card">
-        <div class="login-header">
-            <h2>Admin Login</h2>
-            <p>Enter your credentials to access the admin dashboard.</p>
+<body class="bg-gradient-to-br from-slate-100 via-blue-50/50 to-indigo-100 text-slate-800 antialiased min-h-screen flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8">
+
+    <div class="w-full max-w-md my-auto">
+        <!-- Back Link -->
+        <div class="mb-4">
+            <a href="index.html" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors p-1 rounded-lg">
+                ← Back to Student Portal
+            </a>
         </div>
-        <form id="adminLoginForm" onsubmit="handleLogin(event)">
-            <div class="form-group">
-                <label for="username">Email</label>
-                <input type="email" id="email" name="email" placeholder="admin@example.com" required>
+
+        <!-- Login Card -->
+        <div class="bg-white/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl shadow-blue-900/10 border border-white/60 p-6 sm:p-10">
+            <!-- Header -->
+            <div class="text-center mb-6 sm:mb-8">
+                <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-600 text-white text-2xl mb-3 shadow-lg shadow-blue-500/30">
+                    🛡️
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Admin Portal</h1>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1.5">
+                    Authorized staff credentials required
+                </p>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Password" required>
+
+            <!-- Feedback Alert -->
+            <div id="messageContainer" class="hidden mb-5 p-3.5 rounded-xl text-xs sm:text-sm font-medium border transition-all">
+                <p id="message"></p>
             </div>
-            <button type="submit" class="submit-button">Log In</button>
-        </form>
-        <div id="messageContainer" class="message-container hidden">
-            <p id="message" class="message"></p>
-        </div>
-        <div style="margin-top: 1.5rem; font-size: 0.875rem;">
-            <a href="index.html" style="color: var(--accent-color); text-decoration: none; font-weight: 600;">← Back to Home</a>
+
+            <!-- Form -->
+            <form id="adminLoginForm" onsubmit="handleLogin(event)" class="space-y-4 sm:space-y-5">
+                <div>
+                    <label for="email" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5">
+                        Admin Email
+                    </label>
+                    <div class="relative">
+                        <input type="email" id="email" name="email" required
+                            placeholder="admin@example.com"
+                            autocomplete="username"
+                            class="w-full pl-10 pr-4 py-3 sm:py-3.5 rounded-xl border border-slate-200 bg-slate-50/60 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 text-sm">
+                            ✉️
+                        </span>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5">
+                        Password
+                    </label>
+                    <div class="relative">
+                        <input type="password" id="password" name="password" required
+                            placeholder="••••••••"
+                            autocomplete="current-password"
+                            class="w-full pl-10 pr-11 py-3 sm:py-3.5 rounded-xl border border-slate-200 bg-slate-50/60 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 text-sm">
+                            🔒
+                        </span>
+                        <!-- Password Visibility Toggle -->
+                        <button type="button" onclick="togglePasswordVisibility()" aria-label="Toggle password visibility"
+                            class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none">
+                            <span id="eyeIcon">👁️</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submitBtn"
+                    class="w-full flex items-center justify-center gap-2 py-3.5 sm:py-4 px-6 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.99] shadow-lg shadow-blue-500/25 transition-all text-base sm:text-lg cursor-pointer mt-2">
+                    <span id="btnText">Secure Log In</span>
+                    <span id="btnSpinner" class="hidden">
+                        <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                        </svg>
+                    </span>
+                </button>
+            </form>
+
+            <div class="mt-6 pt-5 border-t border-slate-100 text-center">
+                <p class="text-[11px] sm:text-xs text-slate-400">
+                    College Complaint Report System &bull; Administrative Security Portal
+                </p>
+            </div>
         </div>
     </div>
+
     <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.textContent = '👁️';
+            }
+        }
+
         async function handleLogin(event) {
             event.preventDefault();
 
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const messageContainer = document.getElementById('messageContainer');
             const message = document.getElementById('message');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+
+            // Button loading state
+            submitBtn.disabled = true;
+            btnText.textContent = 'Authenticating...';
+            btnSpinner.classList.remove('hidden');
+            messageContainer.classList.add('hidden');
 
             try {
                 const response = await fetch('https://ccrs-hfw7.onrender.com/api/admin/signin', {
@@ -180,27 +148,27 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    message.textContent = data.message || 'Login successful!';
-                    message.className = 'message success';
-                    messageContainer.style.display = 'block';
-
+                    message.textContent = data.message || 'Login successful! Redirecting to dashboard...';
+                    messageContainer.className = 'mb-5 p-3.5 rounded-xl text-xs sm:text-sm font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 block';
+                    
                     // Save admin session
                     sessionStorage.setItem('adminUser', JSON.stringify(data.admin || { email }));
 
-                    // Redirect to admin dashboard
                     setTimeout(() => {
                         window.location.href = 'admin-dashboard.html';
-                    }, 1000);
+                    }, 800);
                 } else {
-                    message.textContent = data.error || 'Invalid credentials';
-                    message.className = 'message error';
-                    messageContainer.style.display = 'block';
+                    message.textContent = data.error || 'Invalid administrator email or password.';
+                    messageContainer.className = 'mb-5 p-3.5 rounded-xl text-xs sm:text-sm font-medium bg-red-50 text-red-700 border border-red-200 block';
                 }
             } catch (error) {
-                message.textContent = 'An error occurred. Please try again later.';
-                message.className = 'message error';
-                messageContainer.style.display = 'block';
                 console.error('Admin login error:', error);
+                message.textContent = 'Connection error. Please ensure the server is active.';
+                messageContainer.className = 'mb-5 p-3.5 rounded-xl text-xs sm:text-sm font-medium bg-red-50 text-red-700 border border-red-200 block';
+            } finally {
+                submitBtn.disabled = false;
+                btnText.textContent = 'Secure Log In';
+                btnSpinner.classList.add('hidden');
             }
         }
     </script>

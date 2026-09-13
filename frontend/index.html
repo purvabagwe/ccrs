@@ -3,126 +3,373 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College Complaint Report System</title>
-    <!-- Use Tailwind CSS for a modern and responsive design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>College Complaint Report System - Official Portal</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Use Inter font from Google Fonts -->
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Touch friendly min-heights and smooth transitions */
+        .tap-target {
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+        }
+        /* Mobile menu smooth slide */
+        #mobile-menu {
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
         }
     </style>
 </head>
 
-<body class="bg-gray-100 antialiased">
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
 
     <!-- Header Section -->
-    <header class="bg-white shadow-md rounded-b-xl">
-        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
-            <!-- Title -->
-            <div class="flex items-center space-x-3">
-                <span class="text-3xl">🎓</span>
-                <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
-                    College Complaint Report System
-                </h1>
+    <header class="bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- Brand / Logo -->
+                <a href="index.html" class="flex items-center space-x-2.5 sm:space-x-3 group focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg p-1">
+                    <span class="text-2xl sm:text-3xl p-1.5 sm:p-2 bg-blue-50 rounded-xl border border-blue-100 group-hover:scale-105 transition-transform duration-200">🎓</span>
+                    <div class="flex flex-col">
+                        <span class="text-base sm:text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">CCRS Portal</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 font-medium hidden xs:inline">College Complaint System</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                    <a href="index.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-blue-600 bg-blue-50 transition-colors">Home</a>
+                    <a href="lodge.html" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-colors">Lodge Complaint</a>
+                    <a href="view.html" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-colors">View Status</a>
+                    <a href="admin.html" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-colors">Admin Login</a>
+                </nav>
+
+                <!-- Desktop Auth Buttons / User State -->
+                <div id="auth-buttons" class="hidden md:flex items-center space-x-3">
+                    <a href="signin.html" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 transition-colors">Sign In</a>
+                    <a href="signup.html" class="px-4 py-2 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-sm hover:shadow transition-all">Sign Up</a>
+                </div>
+
+                <!-- Mobile Hamburger Button -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-button" type="button" aria-expanded="false" aria-label="Toggle navigation menu"
+                        class="p-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                        <!-- Hamburger Icon -->
+                        <svg id="menu-open-icon" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                        <!-- Close Icon -->
+                        <svg id="menu-close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
-            <!-- Navigation Links -->
-            <nav class="flex items-center space-x-4">
-                <a href="index.html" class="text-gray-600 font-medium hover:text-blue-500 transition-colors">Home</a>
-                <a href="lodge.html" class="text-gray-600 font-medium hover:text-blue-500 transition-colors">Lodge
-                    Complaint</a>
-                <a href="view.html" class="text-gray-600 font-medium hover:text-blue-500 transition-colors">View
-                    Status</a>
-                <a href="admin.html"
-                    class="text-gray-600 font-medium hover:text-blue-500 transition-colors whitespace-nowrap">Admin
-                    Login</a>
-            </nav>
+            <!-- Mobile Navigation Drawer -->
+            <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 py-4 px-1 space-y-2">
+                <a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-semibold text-blue-600 bg-blue-50">
+                    <span>🏠</span> Home
+                </a>
+                <a href="lodge.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100 hover:text-blue-600">
+                    <span>📝</span> Lodge Complaint
+                </a>
+                <a href="view.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100 hover:text-blue-600">
+                    <span>🔍</span> View Status
+                </a>
+                <a href="admin.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100 hover:text-blue-600">
+                    <span>🛡️</span> Admin Portal
+                </a>
 
-            <!-- Auth Buttons / User State -->
-            <div id="auth-buttons" class="hidden md:flex items-center space-x-4">
-                <a href="signin.html" class="text-gray-600 font-medium hover:text-blue-500 transition-colors">Sign In</a>
-                <a href="signup.html"
-                    class="bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition-colors whitespace-nowrap">Sign Up</a>
+                <!-- Mobile Auth Buttons -->
+                <div id="mobile-auth-container" class="pt-4 border-t border-slate-100 mt-2 space-y-2">
+                    <a href="signin.html" class="block w-full text-center py-2.5 px-4 rounded-xl text-base font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors">
+                        Sign In
+                    </a>
+                    <a href="signup.html" class="block w-full text-center py-2.5 px-4 rounded-xl text-base font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors">
+                        Create Account
+                    </a>
+                </div>
             </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 mt-12">
+    <main class="flex-grow">
         <!-- Hero Section -->
-        <section class="text-center py-16">
-            <h2 class="text-4xl font-bold text-gray-800 mb-4">Your Voice, Our Priority</h2>
-            <p class="text-lg text-gray-600 mb-8">
-                Anonymously report complaints and track their status with ease.
-            </p>
-            <a href="lodge.html"
-                class="inline-block bg-blue-600 text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider shadow-lg hover:bg-blue-700 transition-transform transform hover:-translate-y-1">
-                Lodge a Complaint
-            </a>
-        </section>
+        <section class="relative overflow-hidden pt-10 pb-14 sm:pt-16 sm:pb-20 lg:pt-24 lg:pb-28 bg-gradient-to-b from-blue-50/70 via-white to-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <!-- Tagline Badge -->
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100/80 border border-blue-200 text-blue-800 text-xs sm:text-sm font-semibold mb-6 shadow-sm">
+                    <span class="inline-block w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                    Anonymous &bull; Safe &bull; Resolved Fast
+                </div>
 
-        <!-- Complaint Categories Section -->
-        <section class="mt-12">
-            <h3 class="text-3xl font-bold text-gray-800 text-center mb-8">Common Complaint Categories</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
-                    <span class="text-3xl">👨‍🏫</span>
-                    <p class="font-medium text-gray-700">Academic Issues</p>
+                <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
+                    Your Voice Matters. <br class="hidden sm:inline" />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-800">
+                        We Hear, We Act.
+                    </span>
+                </h1>
+
+                <p class="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                    Submit campus complaints anonymously, track real-time resolution progress, and help make our college community safer and better.
+                </p>
+
+                <!-- Call to Actions -->
+                <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 max-w-md sm:max-w-none mx-auto">
+                    <a href="lodge.html"
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.98] shadow-lg shadow-blue-500/25 transition-all text-base sm:text-lg">
+                        <span>✍️</span> Lodge a Complaint
+                    </a>
+                    <a href="view.html"
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-slate-700 bg-white hover:bg-slate-50 hover:text-blue-600 active:scale-[0.98] border border-slate-200 shadow-sm transition-all text-base sm:text-lg">
+                        <span>🔍</span> Track Status
+                    </a>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
-                    <span class="text-3xl">📝</span>
-                    <p class="font-medium text-gray-700">Exam & Result Queries</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
-                    <span class="text-3xl">🏫</span>
-                    <p class="font-medium text-gray-700">Campus Facilities</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
-                    <span class="text-3xl">🚫</span>
-                    <p class="font-medium text-gray-700">Ragging / Harassment</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
-                    <span class="text-3xl">✉️</span>
-                    <p class="font-medium text-gray-700">Other Complaints</p>
+
+                <!-- Trust Badges -->
+                <div class="mt-12 pt-8 border-t border-slate-200/60 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto text-left sm:text-center">
+                    <div class="p-3 bg-white/60 backdrop-blur rounded-xl border border-slate-100">
+                        <div class="text-xl sm:text-2xl font-bold text-blue-600">100%</div>
+                        <div class="text-xs sm:text-sm text-slate-500">Anonymous Report</div>
+                    </div>
+                    <div class="p-3 bg-white/60 backdrop-blur rounded-xl border border-slate-100">
+                        <div class="text-xl sm:text-2xl font-bold text-indigo-600">24/7</div>
+                        <div class="text-xs sm:text-sm text-slate-500">Instant Lodging</div>
+                    </div>
+                    <div class="p-3 bg-white/60 backdrop-blur rounded-xl border border-slate-100">
+                        <div class="text-xl sm:text-2xl font-bold text-emerald-600">Live</div>
+                        <div class="text-xs sm:text-sm text-slate-500">Status Tracking</div>
+                    </div>
+                    <div class="p-3 bg-white/60 backdrop-blur rounded-xl border border-slate-100">
+                        <div class="text-xl sm:text-2xl font-bold text-amber-600">Direct</div>
+                        <div class="text-xs sm:text-sm text-slate-500">Admin Action</div>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <!-- How It Works Section -->
+        <section class="py-12 sm:py-16 bg-white border-y border-slate-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+                    <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-blue-600">Simple Process</h2>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">How It Works in 3 Steps</h3>
+                    <p class="text-slate-600 text-sm sm:text-base mt-2">No complicated bureaucracy — just fast, accountable grievance resolution.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                    <!-- Step 1 -->
+                    <div class="relative bg-slate-50 p-6 sm:p-7 rounded-2xl border border-slate-200/80 hover:border-blue-300 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-xl bg-blue-600 text-white font-bold flex items-center justify-center text-lg mb-4 shadow-md shadow-blue-500/20">
+                            1
+                        </div>
+                        <h4 class="text-lg font-bold text-slate-900 mb-2">Submit Your Grievance</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Fill out the complaint form with title, category, and issue details. Your identity is fully protected.
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative bg-slate-50 p-6 sm:p-7 rounded-2xl border border-slate-200/80 hover:border-blue-300 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-600 text-white font-bold flex items-center justify-center text-lg mb-4 shadow-md shadow-indigo-500/20">
+                            2
+                        </div>
+                        <h4 class="text-lg font-bold text-slate-900 mb-2">Receive Unique Tracking ID</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Immediately receive an exclusive ID (e.g. COMP-12345) to monitor updates anytime without logging in.
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative bg-slate-50 p-6 sm:p-7 rounded-2xl border border-slate-200/80 hover:border-blue-300 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white font-bold flex items-center justify-center text-lg mb-4 shadow-md shadow-emerald-500/20">
+                            3
+                        </div>
+                        <h4 class="text-lg font-bold text-slate-900 mb-2">Investigation & Resolution</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            College authorities review, investigate, and update the status to Resolved with verified remarks.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="py-12 sm:py-16 lg:py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+                    <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-blue-600">Categories</h2>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Grievance Categories Handled</h3>
+                    <p class="text-slate-600 text-sm sm:text-base mt-2">Select any domain to file your report directly.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                    <!-- Academic Issues -->
+                    <a href="lodge.html?category=Academic" class="group bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all">
+                        <div class="flex items-start space-x-4">
+                            <span class="text-3xl sm:text-4xl p-2.5 bg-blue-50 rounded-xl group-hover:scale-110 transition-transform">👨‍🏫</span>
+                            <div class="flex-grow">
+                                <h4 class="text-base sm:text-lg font-bold text-slate-800 group-hover:text-blue-600 transition-colors">Academic Issues</h4>
+                                <p class="text-xs sm:text-sm text-slate-500 mt-1">Lectures, faculty queries, curriculum, attendance & scheduling.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Exam & Result -->
+                    <a href="lodge.html?category=Academic" class="group bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all">
+                        <div class="flex items-start space-x-4">
+                            <span class="text-3xl sm:text-4xl p-2.5 bg-indigo-50 rounded-xl group-hover:scale-110 transition-transform">📝</span>
+                            <div class="flex-grow">
+                                <h4 class="text-base sm:text-lg font-bold text-slate-800 group-hover:text-blue-600 transition-colors">Exam & Results</h4>
+                                <p class="text-xs sm:text-sm text-slate-500 mt-1">Re-evaluations, hall tickets, grading discrepancies & marksheets.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Facilities -->
+                    <a href="lodge.html?category=Facilities" class="group bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all">
+                        <div class="flex items-start space-x-4">
+                            <span class="text-3xl sm:text-4xl p-2.5 bg-amber-50 rounded-xl group-hover:scale-110 transition-transform">🏫</span>
+                            <div class="flex-grow">
+                                <h4 class="text-base sm:text-lg font-bold text-slate-800 group-hover:text-blue-600 transition-colors">Campus Facilities</h4>
+                                <p class="text-xs sm:text-sm text-slate-500 mt-1">Labs, library, canteen hygiene, hostels, restrooms & Wi-Fi.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Harassment -->
+                    <a href="lodge.html?category=Harassment" class="group bg-white p-6 rounded-2xl border border-red-200 shadow-sm hover:shadow-md hover:border-red-400 transition-all">
+                        <div class="flex items-start space-x-4">
+                            <span class="text-3xl sm:text-4xl p-2.5 bg-red-50 rounded-xl group-hover:scale-110 transition-transform">🚫</span>
+                            <div class="flex-grow">
+                                <h4 class="text-base sm:text-lg font-bold text-red-700 group-hover:text-red-800 transition-colors">Anti-Ragging & Safety</h4>
+                                <p class="text-xs sm:text-sm text-slate-500 mt-1">Immediate confidential priority for harassment or safety concerns.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Admin Services -->
+                    <a href="lodge.html?category=Other" class="group bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all">
+                        <div class="flex items-start space-x-4">
+                            <span class="text-3xl sm:text-4xl p-2.5 bg-purple-50 rounded-xl group-hover:scale-110 transition-transform">💳</span>
+                            <div class="flex-grow">
+                                <h4 class="text-base sm:text-lg font-bold text-slate-800 group-hover:text-blue-600 transition-colors">Fee & Accounts</h4>
+                                <p class="text-xs sm:text-sm text-slate-500 mt-1">Scholarships, fee payments, refund queries & certificates.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Other Complaints -->
+                    <a href="lodge.html?category=Other" class="group bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all">
+                        <div class="flex items-start space-x-4">
+                            <span class="text-3xl sm:text-4xl p-2.5 bg-emerald-50 rounded-xl group-hover:scale-110 transition-transform">✉️</span>
+                            <div class="flex-grow">
+                                <h4 class="text-base sm:text-lg font-bold text-slate-800 group-hover:text-blue-600 transition-colors">Other Complaints</h4>
+                                <p class="text-xs sm:text-sm text-slate-500 mt-1">Sports, transport, extracurricular activities & general queries.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer Section -->
-
-    <footer class="bg-gray-800 rounded-t-xl text-white py-6 mt-12">
-        <div class="container mx-auto px-6 text-center">
-            <p class="text-gray-400">&copy; 2025 College Complaint Report System</p>
-            <div class="flex justify-center space-x-4 mt-2 text-sm">
-                <a href="#" class="text-gray-400 hover:text-blue-400">Terms of Service</a>
-                <span class="text-gray-600">|</span>
-                <a href="#" class="text-gray-400 hover:text-blue-400">Privacy Policy</a>
+    <footer class="bg-slate-900 text-slate-300 py-10 sm:py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="flex items-center space-x-3 text-center sm:text-left">
+                    <span class="text-3xl">🎓</span>
+                    <div>
+                        <div class="font-bold text-white text-base sm:text-lg">College Complaint Report System</div>
+                        <div class="text-xs text-slate-400">Ensuring transparency, student safety, and prompt redressal.</div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-slate-400">
+                    <a href="lodge.html" class="hover:text-white transition-colors">Lodge Complaint</a>
+                    <a href="view.html" class="hover:text-white transition-colors">Check Status</a>
+                    <a href="admin.html" class="hover:text-white transition-colors">Admin Login</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
+                &copy; 2025 College Complaint Report System. All rights reserved.
             </div>
         </div>
     </footer>
 
+    <!-- Script for mobile menu & session management -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const authContainer = document.getElementById('auth-buttons');
+            const mobileBtn = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openIcon = document.getElementById('menu-open-icon');
+            const closeIcon = document.getElementById('menu-close-icon');
+
+            // Mobile menu toggle
+            mobileBtn.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    openIcon.classList.add('hidden');
+                    closeIcon.classList.remove('hidden');
+                    mobileBtn.setAttribute('aria-expanded', 'true');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    openIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    mobileBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // Handle user session
+            const desktopAuth = document.getElementById('auth-buttons');
+            const mobileAuth = document.getElementById('mobile-auth-container');
             const currentUser = localStorage.getItem('currentUser');
 
             if (currentUser) {
                 try {
                     const user = JSON.parse(currentUser);
-                    const displayName = user.firstName ? `${user.firstName}` : user.email.split('@')[0];
-                    authContainer.innerHTML = `
-                        <span class="text-sm font-medium text-gray-700">👋 Hi, <strong class="text-blue-600">${displayName}</strong></span>
-                        <button onclick="handleLogout()" class="text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1.5 rounded-md font-medium transition-colors">Logout</button>
+                    const displayName = user.firstName ? user.firstName : user.email.split('@')[0];
+                    
+                    // Desktop auth display
+                    desktopAuth.innerHTML = `
+                        <span class="text-xs sm:text-sm font-medium text-slate-700 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
+                            👋 Hi, <strong class="text-blue-600">${escapeHtml(displayName)}</strong>
+                        </span>
+                        <button onclick="handleLogout()" class="text-sm bg-slate-200 hover:bg-slate-300 text-slate-700 px-3.5 py-1.5 rounded-lg font-medium transition-colors">
+                            Logout
+                        </button>
                     `;
-                } catch (e) {}
+
+                    // Mobile drawer auth display
+                    mobileAuth.innerHTML = `
+                        <div class="flex items-center justify-between p-3 bg-slate-100 rounded-xl">
+                            <span class="text-sm font-medium text-slate-700">
+                                👋 Logged in as <strong class="text-blue-600">${escapeHtml(displayName)}</strong>
+                            </span>
+                            <button onclick="handleLogout()" class="text-xs bg-red-100 text-red-600 hover:bg-red-200 px-3 py-1.5 rounded-lg font-semibold transition-colors">
+                                Logout
+                            </button>
+                        </div>
+                    `;
+                } catch (e) {
+                    console.error("Failed to parse user session", e);
+                }
             }
         });
+
+        function escapeHtml(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
 
         function handleLogout() {
             localStorage.removeItem('currentUser');

@@ -3,278 +3,296 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>View Complaint Status - College Complaint Report System</title>
-    <!-- Use Inter font from Google Fonts -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f0f4f8, #c1d5e0);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
-
-        /* Header Styles */
-        .header {
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            border-bottom-left-radius: 1rem;
-            border-bottom-right-radius: 1rem;
-            margin-bottom: 2rem;
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .header h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1f2937;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav-link {
-            color: #4b5563;
-            font-weight: 500;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: #3b82f6;
-        }
-
-        .main-content {
-            padding: 0 1.5rem;
-        }
-
-        .container {
-            max-width: 48rem;
-            /* max-w-2xl */
-            margin: 0 auto;
-        }
-
-        /* Card Styles */
-        .card {
-            background-color: #ffffff;
-            padding: 2.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            text-align: center;
-        }
-
-        .card h2 {
-            font-size: 1.875rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        .card p {
-            font-size: 1rem;
-            color: #4b5563;
-            margin-bottom: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #4b5563;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.5rem;
-            background-color: #f9fafb;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-        }
-
-        .submit-button {
-            background-color: #2563eb;
-            color: #ffffff;
-            font-weight: 700;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            width: 100%;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .submit-button:hover {
-            background-color: #1e40af;
-        }
-
-        .status-card {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-            padding: 2.5rem;
-            background-color: #ffffff;
-            border-radius: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            margin-top: 2rem;
-            text-align: left;
-        }
-
-        .status-header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .status-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1f2937;
-        }
-
-        .status-icon {
-            font-size: 2.25rem;
-        }
-
-        .status-info {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .info-row {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .info-label {
-            font-weight: 500;
-            color: #4b5563;
-            width: 10rem;
-        }
-
-        .info-value {
-            font-weight: 700;
-            color: #1f2937;
-        }
-
-        .status-message-container {
-            display: none;
-            margin-top: 2rem;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            font-weight: 500;
-        }
-
-        .status-message.error {
-            background-color: rgba(220, 53, 69, 0.1);
-            color: #dc3545;
-            border: 1px solid rgba(220, 53, 69, 0.2);
-        }
-
-        .status-message.success {
-            background-color: rgba(40, 167, 69, 0.1);
-            color: #28a745;
-            border: 1px solid rgba(40, 167, 69, 0.2);
+        input {
+            font-size: 16px !important;
         }
     </style>
 </head>
 
-<body>
+<body class="bg-gradient-to-b from-blue-50/70 via-slate-50 to-slate-100 text-slate-800 antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
+
     <!-- Header Section -->
-    <header class="header">
-        <h1><span>🔍</span>View Complaint Status</h1>
-        <nav class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="lodge.html" class="nav-link">Lodge Complaint</a>
-            <a href="admin.html" class="nav-link">Admin Login</a>
-        </nav>
+    <header class="bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- Brand / Logo -->
+                <a href="index.html" class="flex items-center space-x-2.5 sm:space-x-3 group focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg p-1">
+                    <span class="text-2xl sm:text-3xl p-1.5 sm:p-2 bg-blue-50 rounded-xl border border-blue-100 group-hover:scale-105 transition-transform duration-200">🎓</span>
+                    <div class="flex flex-col">
+                        <span class="text-base sm:text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">CCRS Portal</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 font-medium hidden xs:inline">College Complaint System</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                    <a href="index.html" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-colors">Home</a>
+                    <a href="lodge.html" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-colors">Lodge Complaint</a>
+                    <a href="view.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-blue-600 bg-blue-50 transition-colors">View Status</a>
+                    <a href="admin.html" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-colors">Admin Login</a>
+                </nav>
+
+                <!-- Mobile Hamburger Button -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-button" type="button" aria-expanded="false" aria-label="Toggle navigation menu"
+                        class="p-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                        <svg id="menu-open-icon" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                        <svg id="menu-close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Drawer -->
+            <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 py-4 px-1 space-y-2">
+                <a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100 hover:text-blue-600">
+                    <span>🏠</span> Home
+                </a>
+                <a href="lodge.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100 hover:text-blue-600">
+                    <span>📝</span> Lodge Complaint
+                </a>
+                <a href="view.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-semibold text-blue-600 bg-blue-50">
+                    <span>🔍</span> View Status
+                </a>
+                <a href="admin.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100 hover:text-blue-600">
+                    <span>🛡️</span> Admin Portal
+                </a>
+            </div>
+        </div>
     </header>
 
-    <main class="main-content">
-        <div class="container">
-            <div class="card">
-                <h2>Check Complaint Status</h2>
-                <p>Enter the Complaint ID you received to view its current status.</p>
-                <form id="statusForm" onsubmit="checkStatus(event)">
-                    <div class="form-group">
-                        <label for="complaintId">Complaint ID</label>
-                        <input type="text" id="complaintId" name="complaintId" placeholder="e.g., COMP-12345" required>
+    <!-- Main Content -->
+    <main class="flex-grow py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto space-y-6 sm:space-y-8">
+
+            <!-- Search Card -->
+            <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 p-5 sm:p-8 md:p-10">
+                <div class="text-center mb-6 sm:mb-8">
+                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 text-2xl mb-3 shadow-inner">
+                        🔍
                     </div>
-                    <button type="submit" class="submit-button">Check Status</button>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Check Complaint Status</h1>
+                    <p class="text-sm sm:text-base text-slate-500 mt-2 max-w-md mx-auto">
+                        Enter the unique Complaint ID assigned to your submission to view live progress.
+                    </p>
+                </div>
+
+                <form id="statusForm" onsubmit="checkStatus(event)" class="space-y-4">
+                    <div>
+                        <label for="complaintId" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5">
+                            Complaint Tracking ID
+                        </label>
+                        <div class="relative">
+                            <input type="text" id="complaintId" name="complaintId" required
+                                placeholder="e.g., COMP-12345"
+                                autocomplete="off" autocorrect="off" autocapitalize="characters"
+                                class="w-full pl-11 pr-10 py-3.5 sm:py-4 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 font-mono text-base font-semibold placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all uppercase">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                                🏷️
+                            </div>
+                            <button type="button" id="clearInputBtn" onclick="clearSearchInput()"
+                                class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="searchBtn"
+                        class="w-full flex items-center justify-center gap-2 py-3.5 sm:py-4 px-6 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.99] shadow-lg shadow-blue-500/25 transition-all text-base sm:text-lg cursor-pointer">
+                        <span id="searchBtnText">Check Status</span>
+                        <span id="searchSpinner" class="hidden">
+                            <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                            </svg>
+                        </span>
+                    </button>
                 </form>
             </div>
 
-            <div id="statusMessageContainer" class="status-message-container">
-                <p id="statusMessage" class="status-message"></p>
+            <!-- Error Notification Container -->
+            <div id="statusMessageContainer" class="hidden p-4 sm:p-5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm sm:text-base transition-all">
+                <div class="flex items-start gap-3">
+                    <span class="text-xl">⚠️</span>
+                    <div>
+                        <strong class="font-bold block">Complaint ID Not Found</strong>
+                        <span id="statusMessage">Please double-check the ID or verify if it was typed correctly.</span>
+                    </div>
+                </div>
             </div>
 
-            <div id="statusCard" class="status-card">
-                <div class="status-header">
-                    <h3 class="status-title">Complaint Details</h3>
-                    <span id="statusIcon" class="status-icon"></span>
-                </div>
-                <div class="status-info">
-                    <div class="info-row">
-                        <span class="info-label">ID:</span>
-                        <span id="complaintIdDisplay" class="info-value"></span>
+            <!-- Status Details Card (Hidden initially) -->
+            <div id="statusCard" class="hidden bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden transition-all duration-300">
+                
+                <!-- Status Top Header with Color Badge -->
+                <div id="statusBanner" class="px-5 sm:px-8 py-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-slate-50/50">
+                    <div class="flex items-center space-x-3">
+                        <span id="statusIcon" class="text-3xl sm:text-4xl p-2 bg-white rounded-xl shadow-sm border border-slate-100">📝</span>
+                        <div>
+                            <span class="text-xs uppercase font-bold tracking-wider text-slate-400">Current Status</span>
+                            <div class="flex items-center gap-2 mt-0.5">
+                                <h3 id="complaintStatus" class="text-xl sm:text-2xl font-extrabold text-slate-900">Pending</h3>
+                                <span id="statusBadgePill" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-yellow-100 text-yellow-800">Reviewing</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="info-row">
-                        <span class="info-label">Title:</span>
-                        <span id="complaintTitle" class="info-value"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Category:</span>
-                        <span id="complaintCategory" class="info-value"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Status:</span>
-                        <span id="complaintStatus" class="info-value"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Date Lodged:</span>
-                        <span id="complaintDate" class="info-value"></span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Description:</span>
-                        <span id="complaintDescription" class="info-value"></span>
+                    <div class="sm:text-right">
+                        <span class="text-xs text-slate-400 uppercase font-semibold block">Date Filed</span>
+                        <span id="complaintDate" class="text-sm sm:text-base font-semibold text-slate-700">Oct 24, 2025</span>
                     </div>
                 </div>
+
+                <!-- Visual Stepper Bar -->
+                <div class="p-5 sm:p-8 border-b border-slate-100 bg-gradient-to-r from-blue-50/30 via-white to-slate-50/30">
+                    <div class="relative flex items-center justify-between max-w-lg mx-auto">
+                        <!-- Connecting Bar Behind -->
+                        <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-slate-200 z-0"></div>
+                        <div id="stepperProgress" class="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-blue-600 transition-all duration-500 z-0 w-0"></div>
+
+                        <!-- Step 1: Lodged -->
+                        <div class="relative z-10 flex flex-col items-center group">
+                            <div id="stepIcon1" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm bg-blue-600 text-white shadow-md ring-4 ring-white">
+                                1
+                            </div>
+                            <span class="text-[11px] sm:text-xs font-semibold text-slate-700 mt-2 text-center">Lodged</span>
+                        </div>
+
+                        <!-- Step 2: In Progress -->
+                        <div class="relative z-10 flex flex-col items-center group">
+                            <div id="stepIcon2" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm bg-slate-200 text-slate-600 ring-4 ring-white">
+                                2
+                            </div>
+                            <span class="text-[11px] sm:text-xs font-semibold text-slate-500 mt-2 text-center">In Progress</span>
+                        </div>
+
+                        <!-- Step 3: Resolved -->
+                        <div class="relative z-10 flex flex-col items-center group">
+                            <div id="stepIcon3" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm bg-slate-200 text-slate-600 ring-4 ring-white">
+                                3
+                            </div>
+                            <span class="text-[11px] sm:text-xs font-semibold text-slate-500 mt-2 text-center">Resolved</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complaint Details Table/Grid -->
+                <div class="p-5 sm:p-8 space-y-4 sm:space-y-5">
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-[130px_1fr] gap-1 sm:gap-4 items-baseline pb-3 border-b border-slate-100">
+                        <span class="text-xs sm:text-sm font-semibold text-slate-500">Complaint ID:</span>
+                        <div class="flex items-center gap-2">
+                            <span id="complaintIdDisplay" class="font-mono text-base font-bold text-blue-600 select-all"></span>
+                            <button onclick="copyCurrentId()" title="Copy ID" class="text-slate-400 hover:text-blue-600 p-1">
+                                📋
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-[130px_1fr] gap-1 sm:gap-4 items-baseline pb-3 border-b border-slate-100">
+                        <span class="text-xs sm:text-sm font-semibold text-slate-500">Subject:</span>
+                        <span id="complaintTitle" class="text-base sm:text-lg font-bold text-slate-800 break-words"></span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-[130px_1fr] gap-1 sm:gap-4 items-baseline pb-3 border-b border-slate-100">
+                        <span class="text-xs sm:text-sm font-semibold text-slate-500">Category:</span>
+                        <div>
+                            <span id="complaintCategory" class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700"></span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-[130px_1fr] gap-1 sm:gap-4 items-start pt-1">
+                        <span class="text-xs sm:text-sm font-semibold text-slate-500">Description:</span>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-sm sm:text-base text-slate-700 leading-relaxed break-words whitespace-pre-line" id="complaintDescription">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Action Buttons -->
+                <div class="px-5 sm:px-8 py-4 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <button onclick="window.print()" class="w-full sm:w-auto text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 py-2 px-3 rounded-lg hover:bg-slate-200 transition-colors">
+                        🖨️ Print Record
+                    </button>
+                    <a href="lodge.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-blue-600 text-white hover:bg-blue-700 shadow-sm transition-all">
+                        ✍️ Lodge Another Complaint
+                    </a>
+                </div>
+
             </div>
+
         </div>
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 mt-auto">
+        <div class="max-w-7xl mx-auto px-4">
+            &copy; 2025 College Complaint Report System &bull; Live Grievance Tracking
+        </div>
+    </footer>
+
     <script>
-        // JavaScript to handle status check
+        // Setup mobile menu and input listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileBtn = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openIcon = document.getElementById('menu-open-icon');
+            const closeIcon = document.getElementById('menu-close-icon');
+
+            mobileBtn.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    openIcon.classList.add('hidden');
+                    closeIcon.classList.remove('hidden');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    openIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                }
+            });
+
+            const inputEl = document.getElementById('complaintId');
+            const clearBtn = document.getElementById('clearInputBtn');
+
+            inputEl.addEventListener('input', () => {
+                clearBtn.classList.toggle('hidden', !inputEl.value);
+            });
+
+            // Check if ID is in URL query parameters (e.g. view.html?id=COMP-78123)
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (id) {
+                inputEl.value = id;
+                clearBtn.classList.remove('hidden');
+                checkStatus();
+            }
+        });
+
+        function clearSearchInput() {
+            const inputEl = document.getElementById('complaintId');
+            inputEl.value = '';
+            document.getElementById('clearInputBtn').classList.add('hidden');
+            inputEl.focus();
+        }
+
+        // Status check handler
         async function checkStatus(event) {
             if (event) event.preventDefault();
 
@@ -285,63 +303,97 @@
             const statusMessageContainer = document.getElementById('statusMessageContainer');
             const statusMessage = document.getElementById('statusMessage');
             const statusCard = document.getElementById('statusCard');
+            const searchBtn = document.getElementById('searchBtn');
+            const searchBtnText = document.getElementById('searchBtnText');
+            const searchSpinner = document.getElementById('searchSpinner');
 
             // Hide previous results
-            statusMessageContainer.style.display = 'none';
-            statusCard.style.display = 'none';
+            statusMessageContainer.classList.add('hidden');
+            statusCard.classList.add('hidden');
+
+            // Loading state
+            searchBtn.disabled = true;
+            searchBtnText.textContent = 'Checking...';
+            searchSpinner.classList.remove('hidden');
 
             try {
-                // Fetch complaint data from the backend
                 const response = await fetch(`https://ccrs-hfw7.onrender.com/api/complaints/${encodeURIComponent(complaintId)}`);
 
                 if (response.ok) {
                     const complaint = await response.json();
-                    document.getElementById('statusIcon').textContent = getStatusIcon(complaint.status);
-                    document.getElementById('complaintIdDisplay').textContent = complaint.complaintId;
-                    document.getElementById('complaintTitle').textContent = complaint.title;
-                    document.getElementById('complaintCategory').textContent = complaint.category;
-                    document.getElementById('complaintStatus').textContent = complaint.status;
-                    document.getElementById('complaintDate').textContent = new Date(complaint.createdAt).toLocaleDateString();
-                    document.getElementById('complaintDescription').textContent = complaint.description;
-
-                    statusMessageContainer.style.display = 'none';
-                    statusCard.style.display = 'flex';
+                    renderComplaintDetails(complaint);
+                    statusCard.classList.remove('hidden');
+                    statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 } else {
-                    statusMessage.textContent = 'Complaint ID not found. Please check your ID and try again.';
-                    statusMessage.className = 'status-message error';
-                    statusMessageContainer.style.display = 'block';
+                    statusMessage.textContent = `No active grievance record was found matching ID "${complaintId}". Please check the ID or contact college authorities.`;
+                    statusMessageContainer.classList.remove('hidden');
                 }
             } catch (error) {
-                statusMessage.textContent = 'An error occurred. Please try again later.';
-                statusMessage.className = 'status-message error';
-                statusMessageContainer.style.display = 'block';
                 console.error('Fetch error:', error);
+                statusMessage.textContent = 'A network error occurred while connecting to the server. Please verify your connection.';
+                statusMessageContainer.classList.remove('hidden');
+            } finally {
+                searchBtn.disabled = false;
+                searchBtnText.textContent = 'Check Status';
+                searchSpinner.classList.add('hidden');
             }
         }
 
-        // Helper function to get emoji based on status
-        function getStatusIcon(status) {
-            switch (status) {
-                case 'Pending':
-                    return '📝';
-                case 'In Progress':
-                    return '⚙️';
-                case 'Resolved':
-                    return '✅';
-                default:
-                    return '🔍';
+        // Render complaint and visual stepper
+        function renderComplaintDetails(c) {
+            const status = c.status || 'Pending';
+            
+            document.getElementById('complaintIdDisplay').textContent = c.complaintId || c.id;
+            document.getElementById('complaintTitle').textContent = c.title || 'Untitled';
+            document.getElementById('complaintCategory').textContent = c.category || 'General';
+            document.getElementById('complaintStatus').textContent = status;
+            document.getElementById('complaintDescription').textContent = c.description || 'No description provided.';
+            
+            const dateStr = c.createdAt ? new Date(c.createdAt).toLocaleDateString(undefined, {
+                year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+            }) : 'N/A';
+            document.getElementById('complaintDate').textContent = dateStr;
+
+            // Stepper and Badge styling
+            const iconEl = document.getElementById('statusIcon');
+            const pillEl = document.getElementById('statusBadgePill');
+            const progressBar = document.getElementById('stepperProgress');
+            const step1 = document.getElementById('stepIcon1');
+            const step2 = document.getElementById('stepIcon2');
+            const step3 = document.getElementById('stepIcon3');
+
+            // Reset stepper styles
+            step1.className = 'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm bg-blue-600 text-white shadow-md ring-4 ring-white';
+            step2.className = 'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm bg-slate-200 text-slate-600 ring-4 ring-white';
+            step3.className = 'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm bg-slate-200 text-slate-600 ring-4 ring-white';
+
+            if (status === 'Pending') {
+                iconEl.textContent = '⏳';
+                pillEl.textContent = 'Pending Review';
+                pillEl.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-yellow-100 text-yellow-800';
+                progressBar.style.width = '10%';
+            } else if (status === 'In Progress') {
+                iconEl.textContent = '⚙️';
+                pillEl.textContent = 'In Investigation';
+                pillEl.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800';
+                progressBar.style.width = '50%';
+                step2.className = 'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm bg-blue-600 text-white shadow-md ring-4 ring-white animate-pulse';
+            } else if (status === 'Resolved') {
+                iconEl.textContent = '✅';
+                pillEl.textContent = 'Resolved';
+                pillEl.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800';
+                progressBar.style.width = '100%';
+                step2.className = 'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm bg-blue-600 text-white shadow-md ring-4 ring-white';
+                step3.className = 'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm bg-emerald-600 text-white shadow-md ring-4 ring-white';
             }
         }
 
-        // Check if ID is in URL query parameters (e.g. view.html?id=COMP-78123)
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const id = params.get('id');
-            if (id) {
-                document.getElementById('complaintId').value = id;
-                checkStatus();
+        function copyCurrentId() {
+            const id = document.getElementById('complaintIdDisplay').textContent;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(id).then(() => alert('Complaint ID copied!'));
             }
-        });
+        }
     </script>
 </body>
 

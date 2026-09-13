@@ -292,7 +292,7 @@
 
             try {
                 // Fetch complaint data from the backend
-                const response = await fetch(`/api/complaints/${encodeURIComponent(complaintId)}`);
+                const response = await fetch(`https://ccrs-hfw7.onrender.com/api/complaints/${encodeURIComponent(complaintId)}`);
 
                 if (response.ok) {
                     const complaint = await response.json();
